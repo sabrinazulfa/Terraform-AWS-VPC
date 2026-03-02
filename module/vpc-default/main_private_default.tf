@@ -11,19 +11,19 @@ resource "aws_subnet" "private_subnet_default" {
 }
 
 # EIP for NAT
-# resource "aws_eip" "nat_eip_default" {
-#   depends_on = [var.internet_gateway_default]
-# }
+resource "aws_eip" "nat_eip_default" {
+  depends_on = [var.internet_gateway_default]
+}
 
-# # NAT
-# resource "aws_nat_gateway" "nat_gateway_default" {
-#   allocation_id = aws_eip.nat_eip_default.id
-#   subnet_id     = element(aws_subnet.public_subnet_default.*.id, 0)
+# NAT
+resource "aws_nat_gateway" "nat_gateway_default" {
+  allocation_id = aws_eip.nat_eip_default.id
+  subnet_id     = element(aws_subnet.public_subnet_default.*.id, 0)
 
-#   tags = {
-#     Name = "${var.name}-Nat-Gateway"
-#   }
-# }
+  tags = {
+    Name = "${var.name}-Nat-Gateway"
+  }
+}
 
 # Routing tables to route traffic for Private Subnet
 resource "aws_route_table" "private_rt_default" {
@@ -38,11 +38,7 @@ resource "aws_route_table" "private_rt_default" {
 resource "aws_route" "private_nat_gateway_default" {
   route_table_id         = aws_route_table.private_rt_default.id
   destination_cidr_block = "0.0.0.0/0"
-  //nat_gateway_id         = aws_nat_gateway.nat_gateway_default.id
-  nat_gateway_id = "nat-08f2fee6d9e505d58"
-  lifecycle {
-    ignore_changes = [ nat_gateway_id ]
-  }
+  nat_gateway_id         = aws_nat_gateway.nat_gateway_default.id
 }
 
 # Route table associations for Private Subnets

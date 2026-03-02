@@ -17,7 +17,7 @@ module "Networking-default" {
 }
 
 module "Skenario-1" {
-  count         = 0
+  count         = 1
   source        = "./module/skenario-1"
   ami_id        = local.ami_ubuntu
   volume_size   = "8"
@@ -39,7 +39,7 @@ module "Skenario-2" {
   vpc_id                 = local.vpc_default_id
   vpc_public_subnets_id  = module.Networking-default.public_subnets_id
   vpc_private_subnets_id = module.Networking-default.private_subnets_id
-  desired_capacity       = 0
+  desired_capacity       = 1
   min_capacity           = 0
   max_capacity           = 1
   on_demand_percentage   = 0
@@ -56,9 +56,9 @@ module "ec2-attacker" {
   vpc_id                 = module.Networking.vpc_id
   vpc_public_subnets_id  = module.Networking.public_subnets_id
   vpc_private_subnets_id = module.Networking.public_subnets_id
-  desired_capacity       = 0
-  min_capacity           = 0
-  max_capacity           = 0
+  desired_capacity       = 1
+  min_capacity           = 1
+  max_capacity           = 1
   on_demand_percentage   = 0
   capacity_rebalance     = true
 }
