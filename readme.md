@@ -7,7 +7,7 @@ Terraform module that creates an VPC with the following features
 
 - Create **New Subnet on VPC Default** associate with subnet public[2] and subnet private[2].
 - An **Internet gateway** in front of a public subnet to enable communication between the instances within the public subnet and internet.
-- An **Elastic IP addresses (EIPs)** for Internet Gateway
+- An **Elastic IP addresses (EIPs)** for NAT Gateway
 - An **NAT gateway** in front of a private subnet to enable instances within the private subnet to communicate with the internet while maintaining a layer of security
 - Create **Route table association** to determine the routing rules for network traffic within a particular subnet in a VPC environment (Route table association for public and private).
 - Create **New VPC Attacker** associate with subnet public[1].
